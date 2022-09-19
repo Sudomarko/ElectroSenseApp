@@ -8,3 +8,5 @@
 ## Contributing Guide
   1. After making local edits click on **Source Control -> Commit** to organize your changes
   2. Then send your changes to the shared repository using **Source Control -> Push**
+## XCode Guide
+  https://developer.apple.com/tutorials/swiftui
