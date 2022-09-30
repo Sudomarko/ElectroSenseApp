@@ -14,55 +14,38 @@ struct ContentView: View {
             VStack {
                 HStack {
                     NavigationLink(destination: CirculationView()) {
-                        Text("Circulation")
-                            .font(.title)
-                            .padding()
+                        Image("circulation").resizable().scaledToFit()
                     }
                     
                     NavigationLink(destination: HeartRateView()) {
-                        Text("Heart Rate")
-                            .font(.title)
-                            .padding()
+                        Image("heart-rate").resizable().scaledToFit()
                     }
                     
-                }.offset(x:0, y:-75)
+                }
                 HStack {
                     NavigationLink(destination: PulseOxView()) {
-                        Text("Pulse Ox")
-                            .font(.title)
-                            .padding()
+                        Image("pulse-ox").resizable().scaledToFit()
                     }
                     
                     NavigationLink(destination: BodyPressureView()) {
-                        Text("Body Pressure")
-                            .font(.title)
-                            .padding()
+                        Image("body-pressure").resizable().scaledToFit()
                     }
                     
-                }.offset(x:0, y:-25)
+                }
                 HStack {
                     NavigationLink(destination: TemperatureView()) {
-                        Text("Temperature")
-                            .font(.title)
-                            .padding()
+                        Image("thermometer").resizable().scaledToFit()
                     }
                     
                     NavigationLink(destination: ElectroSenseView()) {
-                        Text("ElectroSense")
-                            .font(.title)
-                            .padding()
+                        Image("warnings").resizable().scaledToFit()
                     }
                     
-                }.offset(x:0, y:25)
-            }.navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        VStack {
-                            Text("ElectroSenseApp").font(.largeTitle)
-                        }
-                    }
                 }
-                .foregroundColor(Color.blue)
+            }
+            .padding(.bottom)
+            
+            
         }
     }
 }
@@ -182,7 +165,7 @@ struct ElectroSenseView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         VStack {
-                            Text("ElectroSense").font(.largeTitle)
+                            Text("Warnings").font(.largeTitle)
                             Text("Subtitle").font(.subheadline)
                         }
                     }
