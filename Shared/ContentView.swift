@@ -14,31 +14,41 @@ struct ContentView: View {
             VStack {
                 HStack {
                     NavigationLink(destination: CirculationView()) {
-                        Image("circulation").resizable().scaledToFit()
+                        Image("circulation").resizable().padding(.all, 40.0).scaledToFit()
+                            
                     }
                     
                     NavigationLink(destination: HeartRateView()) {
-                        Image("heart-rate").resizable().scaledToFit()
+                        Image("heart-rate").resizable()
+                            .padding(.all, 40.0)
+                            .scaledToFit()
+                            
                     }
                     
                 }
                 HStack {
                     NavigationLink(destination: PulseOxView()) {
-                        Image("pulse-ox").resizable().scaledToFit()
+                        Image("pulse-ox").resizable().padding(.all, 40.0).scaledToFit()
+                            
                     }
                     
                     NavigationLink(destination: BodyPressureView()) {
-                        Image("body-pressure").resizable().scaledToFit()
+                        Image("body-pressure").resizable().padding(.all, 40.0).scaledToFit()
+                            
                     }
                     
                 }
                 HStack {
                     NavigationLink(destination: TemperatureView()) {
-                        Image("thermometer").resizable().scaledToFit()
+                        Image("thermometer").resizable().padding(.all, 40.0).scaledToFit()
+                            
                     }
                     
                     NavigationLink(destination: ElectroSenseView()) {
-                        Image("warnings").resizable().scaledToFit()
+                        Image("warnings").resizable()
+                            .padding(.all, 40.0)
+                            .scaledToFit()
+                            
                     }
                     
                 }
