@@ -13,16 +13,24 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 HStack {
-                    NavigationLink(destination: CirculationView()) {
-                        Image("circulation").resizable().padding(.all, 40.0).scaledToFit()
-                            
+                    
+                   
+                        NavigationLink(destination: CirculationView()) {
+                            VStack {
+                                Image("circulation").resizable().padding(.all, 40.0).scaledToFit()
+                                Text("Circulation")
+                            }
+                        
                     }
                     
                     NavigationLink(destination: HeartRateView()) {
-                        Image("heart-rate").resizable()
-                            .padding(.all, 40.0)
-                            .scaledToFit()
-                            
+                        VStack {
+                            Image("heart-rate").resizable()
+                                .padding(.all, 40.0)
+                                .scaledToFit()
+                            Text("Heart Rate")
+                        }
+                        
                     }
                     
                 }
