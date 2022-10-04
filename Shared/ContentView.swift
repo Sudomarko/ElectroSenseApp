@@ -17,18 +17,24 @@ struct ContentView: View {
                    
                         NavigationLink(destination: CirculationView()) {
                             VStack {
-                                Image("circulation").resizable().padding(.all, 40.0).scaledToFit()
+                                Image("1 circulation").resizable().padding(.all, 50.0).scaledToFit()
                                 Text("Circulation")
+                                    .font(.title3)
+                                    .fontWeight(.heavy)
+                                    .foregroundColor(Color.pink)
                             }
                         
                     }
                     
                     NavigationLink(destination: HeartRateView()) {
                         VStack {
-                            Image("heart-rate").resizable()
+                            Image("1 heart-rate").resizable()
                                 .padding(.all, 40.0)
                                 .scaledToFit()
                             Text("Heart Rate")
+                                .font(.title3)
+                                .fontWeight(.heavy)
+                                .foregroundColor(Color.orange)
                         }
                         
                     }
@@ -36,26 +42,50 @@ struct ContentView: View {
                 }
                 HStack {
                     NavigationLink(destination: PulseOxView()) {
-                        Image("pulse-ox").resizable().padding(.all, 40.0).scaledToFit()
-                            
+                        VStack {
+                            Image("1 pulse-ox").resizable().padding(.all, 40.0).scaledToFit()
+                            Text("Pulse Ox")
+                                .font(.title3)
+                                .fontWeight(.heavy)
+                                .foregroundColor(Color(hue: 0.697, saturation: 0.647, brightness: 0.723))
+                        }
                     }
                     
                     NavigationLink(destination: BodyPressureView()) {
-                        Image("body-pressure").resizable().padding(.all, 40.0).scaledToFit()
-                            
+                        VStack {
+                            Image("body-pressure").resizable().padding(.all, 40.0).scaledToFit()
+                            Text("Pressure")
+                                .font(.title3)
+                                .fontWeight(.heavy)
+                                .foregroundColor(Color.green)
+                                .multilineTextAlignment(.center)
+                                .padding()
+                        }
                     }
                     
                 }
                 HStack {
                     NavigationLink(destination: TemperatureView()) {
-                        Image("thermometer").resizable().padding(.all, 40.0).scaledToFit()
+                        VStack {
+                            Image("1 temp").resizable().padding(.all, 40.0).scaledToFit()
+                            Text("Temperature")
+                                .font(.title3)
+                                .fontWeight(.heavy)
+                                .foregroundColor(Color.blue)
+                        }
                             
                     }
                     
                     NavigationLink(destination: ElectroSenseView()) {
-                        Image("warnings").resizable()
-                            .padding(.all, 40.0)
-                            .scaledToFit()
+                        VStack {
+                            Image("warnings").resizable()
+                                .padding(.all, 40.0)
+                                .scaledToFit()
+                            Text("Warning")
+                                .font(.title3)
+                                .fontWeight(.heavy)
+                                .foregroundColor(Color.red)
+                        }
                             
                     }
                     
