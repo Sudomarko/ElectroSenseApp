@@ -13,9 +13,7 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 HStack {
-                    
-                   
-                        NavigationLink(destination: CirculationView()) {
+                    NavigationLink(destination: CirculationView()) {
                             VStack {
                                 Image("1 circulation").resizable().padding(.all, 50.0).scaledToFit()
                                 Text("Circulation")
@@ -24,8 +22,7 @@ struct ContentView: View {
                                     .foregroundColor(Color.pink)
                             }
                         
-                    }
-                    
+                    }.isDetailLink(false)
                     NavigationLink(destination: HeartRateView()) {
                         VStack {
                             Image("1 heart-rate").resizable()
@@ -37,7 +34,7 @@ struct ContentView: View {
                                 .foregroundColor(Color.orange)
                         }
                         
-                    }
+                    }.isDetailLink(false)
                     
                 }
                 HStack {
@@ -49,7 +46,7 @@ struct ContentView: View {
                                 .fontWeight(.heavy)
                                 .foregroundColor(Color(hue: 0.697, saturation: 0.647, brightness: 0.723))
                         }
-                    }
+                    }.isDetailLink(false)
                     
                     NavigationLink(destination: BodyPressureView()) {
                         VStack {
@@ -61,7 +58,7 @@ struct ContentView: View {
                                 .multilineTextAlignment(.center)
                                 .padding()
                         }
-                    }
+                    }.isDetailLink(false)
                     
                 }
                 HStack {
@@ -74,7 +71,7 @@ struct ContentView: View {
                                 .foregroundColor(Color.blue)
                         }
                             
-                    }
+                    }.isDetailLink(false)
                     
                     NavigationLink(destination: ElectroSenseView()) {
                         VStack {
@@ -87,14 +84,13 @@ struct ContentView: View {
                                 .foregroundColor(Color.red)
                         }
                             
-                    }
+                    }.isDetailLink(false)
                     
                 }
-            }
-            .padding(.bottom)
+            }.padding(.bottom, 50)
             
-            
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
+        
     }
 }
 struct CirculationView: View {
@@ -113,7 +109,7 @@ struct CirculationView: View {
                         }
                     }
                 }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
         
     }
 }
@@ -134,7 +130,7 @@ struct HeartRateView: View {
                         }
                     }
                 }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
         
     }
 }
@@ -155,7 +151,7 @@ struct PulseOxView: View {
                         }
                     }
                 }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
         
     }
 }
@@ -176,7 +172,7 @@ struct BodyPressureView: View {
                         }
                     }
                 }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
         
     }
 }
@@ -197,7 +193,7 @@ struct TemperatureView: View {
                         }
                     }
                 }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
         
     }
 }
@@ -218,7 +214,7 @@ struct ElectroSenseView: View {
                         }
                     }
                 }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
         
     }
 }
