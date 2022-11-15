@@ -17,8 +17,8 @@
 		FB84C44828D2292500701953 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84C41E28D2291F00701953 /* ContentView.swift */; };
 		FB84C44928D2292500701953 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB84C41F28D2292200701953 /* Assets.xcassets */; };
 		FB84C44A28D2292500701953 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB84C41F28D2292200701953 /* Assets.xcassets */; };
-		FBCA7ED82923E7F90089000D /* BluetoothFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCA7ED72923E7F90089000D /* BluetoothFile.swift */; };
-		FBCA7ED92923E7F90089000D /* BluetoothFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCA7ED72923E7F90089000D /* BluetoothFile.swift */; };
+		FBCA7ED82923E7F90089000D /* CoreBluetoothWrapFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCA7ED72923E7F90089000D /* CoreBluetoothWrapFile.swift */; };
+		FBCA7ED92923E7F90089000D /* CoreBluetoothWrapFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCA7ED72923E7F90089000D /* CoreBluetoothWrapFile.swift */; };
 		FBCA7EDB2923E9230089000D /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBCA7EDA2923E9230089000D /* info.plist */; };
 		FBCA7EDC2923E9230089000D /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBCA7EDA2923E9230089000D /* info.plist */; };
 /* End PBXBuildFile section */
@@ -53,7 +53,7 @@
 		FB84C43D28D2292400701953 /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB84C44128D2292500701953 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		FB84C44328D2292500701953 /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
-		FBCA7ED72923E7F90089000D /* BluetoothFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothFile.swift; sourceTree = "<group>"; };
+		FBCA7ED72923E7F90089000D /* CoreBluetoothWrapFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreBluetoothWrapFile.swift; sourceTree = "<group>"; };
 		FBCA7EDA2923E9230089000D /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,7 +106,7 @@
 				FB84C41D28D2291F00701953 /* ElectroSenseApp.swift */,
 				FB84C41E28D2291F00701953 /* ContentView.swift */,
 				FB84C41F28D2292200701953 /* Assets.xcassets */,
-				FBCA7ED72923E7F90089000D /* BluetoothFile.swift */,
+				FBCA7ED72923E7F90089000D /* CoreBluetoothWrapFile.swift */,
 				FBCA7EDA2923E9230089000D /* info.plist */,
 			);
 			path = Shared;
@@ -311,7 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBCA7ED82923E7F90089000D /* BluetoothFile.swift in Sources */,
+				FBCA7ED82923E7F90089000D /* CoreBluetoothWrapFile.swift in Sources */,
 				FB84C44728D2292500701953 /* ContentView.swift in Sources */,
 				FB84C44528D2292500701953 /* ElectroSenseApp.swift in Sources */,
 			);
@@ -321,7 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBCA7ED92923E7F90089000D /* BluetoothFile.swift in Sources */,
+				FBCA7ED92923E7F90089000D /* CoreBluetoothWrapFile.swift in Sources */,
 				FB84C44828D2292500701953 /* ContentView.swift in Sources */,
 				FB84C44628D2292500701953 /* ElectroSenseApp.swift in Sources */,
 			);
@@ -479,9 +479,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = 8679A43V99;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ElectroSense;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -492,7 +495,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = ElectroSense.ElectroSense;
 				PRODUCT_NAME = ElectroSense;
 				SDKROOT = iphoneos;
@@ -510,9 +513,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = 8679A43V99;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ElectroSense;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -523,7 +529,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = ElectroSense.ElectroSense;
 				PRODUCT_NAME = ElectroSense;
 				SDKROOT = iphoneos;

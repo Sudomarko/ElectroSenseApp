@@ -11,7 +11,7 @@ import os
 import SwiftUI
 
 class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
-    
+    @Published var title = "CoreBluetoothWrap";
     var powered_on: Bool;
     var scanning: Bool;
     var connected: Bool;
@@ -24,7 +24,7 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         powered_on = false;
         scanning = false;
         connected = false;
-        service = CBUUID(string: "9f37e282-60b6-42b1-a02f-7341da5e2eba");
+        service = CBUUID(string: "B266616A-CC79-AC67-6160-04E23C2B3289");
         central_manager = CBCentralManager(delegate: nil, queue:nil);
         message = "";
         super.init();
@@ -56,7 +56,6 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
       peripheral.delegate = self
 
       // Scan for the chat characteristic we'll use to communicate
-      let service = CBUUID(string: "9f37e282-60b6-42b1-a02f-7341da5e2eba")
       peripheral.discoverServices([service])
     }
     
@@ -80,7 +79,7 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
       }
 
       // Specify the characteristic we want
-        let characteristic = CBUUID(string: "890aa912-c414-440d-88a2-c7f66179589b")
+        let characteristic = CBUUID(string: "FFE1")
 
       // It's possible there may be more than one service,
       // so loop through each one to discover the one that we want
@@ -102,6 +101,17 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
       // Decode/Parse the data here
       message = String(decoding: data, as: UTF8.self)
     }
+    
+    func get_message() {
+        while (true) {
+            let seconds = 4.0
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                // Put your code which should be executed with a delay here
+                print(self.message);
+            }
+        }
+    }
+    
 
 }
 
