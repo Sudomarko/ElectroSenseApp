@@ -17,6 +17,10 @@
 		FB84C44828D2292500701953 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84C41E28D2291F00701953 /* ContentView.swift */; };
 		FB84C44928D2292500701953 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB84C41F28D2292200701953 /* Assets.xcassets */; };
 		FB84C44A28D2292500701953 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB84C41F28D2292200701953 /* Assets.xcassets */; };
+		FBCA7ED82923E7F90089000D /* BluetoothFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCA7ED72923E7F90089000D /* BluetoothFile.swift */; };
+		FBCA7ED92923E7F90089000D /* BluetoothFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCA7ED72923E7F90089000D /* BluetoothFile.swift */; };
+		FBCA7EDB2923E9230089000D /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBCA7EDA2923E9230089000D /* info.plist */; };
+		FBCA7EDC2923E9230089000D /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBCA7EDA2923E9230089000D /* info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +53,8 @@
 		FB84C43D28D2292400701953 /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB84C44128D2292500701953 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		FB84C44328D2292500701953 /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
+		FBCA7ED72923E7F90089000D /* BluetoothFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothFile.swift; sourceTree = "<group>"; };
+		FBCA7EDA2923E9230089000D /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +106,8 @@
 				FB84C41D28D2291F00701953 /* ElectroSenseApp.swift */,
 				FB84C41E28D2291F00701953 /* ContentView.swift */,
 				FB84C41F28D2292200701953 /* Assets.xcassets */,
+				FBCA7ED72923E7F90089000D /* BluetoothFile.swift */,
+				FBCA7EDA2923E9230089000D /* info.plist */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -226,9 +234,11 @@
 				TargetAttributes = {
 					FB84C42328D2292200701953 = {
 						CreatedOnToolsVersion = 13.0;
+						LastSwiftMigration = 1300;
 					};
 					FB84C42928D2292200701953 = {
 						CreatedOnToolsVersion = 13.0;
+						LastSwiftMigration = 1300;
 					};
 					FB84C43028D2292300701953 = {
 						CreatedOnToolsVersion = 13.0;
@@ -266,6 +276,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBCA7EDB2923E9230089000D /* info.plist in Resources */,
 				FB84C44928D2292500701953 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBCA7EDC2923E9230089000D /* info.plist in Resources */,
 				FB84C44A28D2292500701953 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBCA7ED82923E7F90089000D /* BluetoothFile.swift in Sources */,
 				FB84C44728D2292500701953 /* ContentView.swift in Sources */,
 				FB84C44528D2292500701953 /* ElectroSenseApp.swift in Sources */,
 			);
@@ -308,6 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBCA7ED92923E7F90089000D /* BluetoothFile.swift in Sources */,
 				FB84C44828D2292500701953 /* ContentView.swift in Sources */,
 				FB84C44628D2292500701953 /* ElectroSenseApp.swift in Sources */,
 			);
@@ -463,6 +477,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
@@ -482,6 +497,7 @@
 				PRODUCT_NAME = ElectroSense;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -492,6 +508,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
@@ -522,6 +539,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -539,6 +557,7 @@
 				PRODUCT_NAME = ElectroSense;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -548,6 +567,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
