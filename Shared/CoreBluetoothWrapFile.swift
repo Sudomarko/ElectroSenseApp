@@ -16,6 +16,8 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     var scanning: Bool;
     var connected: Bool;
     private var central_manager: CBCentralManager!;
+    private var peripheral: CBPeripheral!;
+    private var characteristic: CBCharacteristic!;
     var service: CBUUID;
     var message: String;
     
@@ -24,7 +26,7 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         powered_on = false;
         scanning = false;
         connected = false;
-        service = CBUUID(string: "B266616A-CC79-AC67-6160-04E23C2B3289");
+        service = CBUUID(string: "FFE0");
         message = "";
         super.init();
     }
@@ -39,6 +41,7 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     
     func scanForItems() {
         central_manager.scanForPeripherals(withServices: [service], options: nil);
+        print("scanning for items");
     }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -49,6 +52,7 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
                   consoleLog = "BLE is powered off"
               case .poweredOn:
                   consoleLog = "BLE is poweredOn"
+                  self.scanForItems();
               case .resetting:
                   consoleLog = "BLE is resetting"
               case .unauthorized:
@@ -67,6 +71,7 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     
     func centralManager(_ centralManager: CBCentralManager,
                             didConnect peripheral: CBPeripheral) {
+        print("connected");
       // Stop scanning once we've connected
       centralManager.stopScan()
 
@@ -80,15 +85,17 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     func centralManager(_ centralManager: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
 
       // Perform any checks on `advertisementData` to confirm this is the correct device
-
+      print("discovered device");
       // Attempt to connect to this device
       centralManager.connect(peripheral, options: nil)
 
       // Retain the peripheral
-      // self.peripheral = peripheral
+      self.peripheral = peripheral
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        print("discovered peripheral: ", peripheral);
+        
       // If an error occurred, disconnect so we can try again from the start
       if let error = error {
         print("Unable to discover services: \(error.localizedDescription)")
@@ -97,7 +104,7 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
       }
 
       // Specify the characteristic we want
-        let characteristic = CBUUID(string: "FFE1")
+      let characteristic = CBUUID(string: "FFE1")
 
       // It's possible there may be more than one service,
       // so loop through each one to discover the one that we want
@@ -117,19 +124,26 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
       guard let data = characteristic.value else { return }
 
       // Decode/Parse the data here
-      message = String(decoding: data, as: UTF8.self)
-    }
-    
-    func get_message() {
-    
-            
-        // Put your code which should be executed with a delay here
-        print(self.message);
-            
+      self.message = String(decoding: data, as: UTF8.self)
         
+      print(message);
     }
     
-
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?){
+        print("discovered service: ", service);
+        guard let characteristics = service.characteristics else {
+            print("no characteristics");
+            return
+        }
+        for characteristic in characteristics {
+            print("discovered characteristic: ", characteristic)
+            self.peripheral.setNotifyValue(true, for: characteristic)
+        }
+    }
+    
+    func get_message()->String {
+        return String(message);
+    }
 }
 
 

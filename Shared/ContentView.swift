@@ -116,10 +116,14 @@ struct CirculationView: View {
 
 struct HeartRateView: View {
     @State private var showAlert = false
+    let some_val = CoreBluetoothWrap();
+    init() {
+        some_val.set_manager();
+    }
     var body: some View {
         NavigationView {
             VStack {
-                Text("Data Placeholder")
+                Text(some_val.get_message())
             }
             .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
