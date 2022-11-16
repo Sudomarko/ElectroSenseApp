@@ -19,8 +19,6 @@
 		FB84C44A28D2292500701953 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB84C41F28D2292200701953 /* Assets.xcassets */; };
 		FBCA7ED82923E7F90089000D /* CoreBluetoothWrapFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCA7ED72923E7F90089000D /* CoreBluetoothWrapFile.swift */; };
 		FBCA7ED92923E7F90089000D /* CoreBluetoothWrapFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCA7ED72923E7F90089000D /* CoreBluetoothWrapFile.swift */; };
-		FBCA7EDB2923E9230089000D /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBCA7EDA2923E9230089000D /* info.plist */; };
-		FBCA7EDC2923E9230089000D /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBCA7EDA2923E9230089000D /* info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +52,7 @@
 		FB84C44128D2292500701953 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		FB84C44328D2292500701953 /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
 		FBCA7ED72923E7F90089000D /* CoreBluetoothWrapFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreBluetoothWrapFile.swift; sourceTree = "<group>"; };
-		FBCA7EDA2923E9230089000D /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
+		FBDFEBC229253F900008551D /* ElectroSense--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ElectroSense--iOS--Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +90,7 @@
 		FB84C41728D2291D00701953 = {
 			isa = PBXGroup;
 			children = (
+				FBDFEBC229253F900008551D /* ElectroSense--iOS--Info.plist */,
 				FB84C41C28D2291E00701953 /* Shared */,
 				FB84C42B28D2292200701953 /* macOS */,
 				FB84C43428D2292300701953 /* Tests iOS */,
@@ -107,7 +106,6 @@
 				FB84C41E28D2291F00701953 /* ContentView.swift */,
 				FB84C41F28D2292200701953 /* Assets.xcassets */,
 				FBCA7ED72923E7F90089000D /* CoreBluetoothWrapFile.swift */,
-				FBCA7EDA2923E9230089000D /* info.plist */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -276,7 +274,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBCA7EDB2923E9230089000D /* info.plist in Resources */,
 				FB84C44928D2292500701953 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,7 +282,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBCA7EDC2923E9230089000D /* info.plist in Resources */,
 				FB84C44A28D2292500701953 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -480,11 +476,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = 8679A43V99;
+				DEVELOPMENT_TEAM = WL39568T2Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ElectroSense--iOS--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ElectroSense;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Check if works";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Check if works";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -496,7 +495,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.31;
-				PRODUCT_BUNDLE_IDENTIFIER = ElectroSense.ElectroSense;
+				PRODUCT_BUNDLE_IDENTIFIER = ElectroSense.xcodeproj;
 				PRODUCT_NAME = ElectroSense;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -514,11 +513,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = 8679A43V99;
+				DEVELOPMENT_TEAM = WL39568T2Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ElectroSense--iOS--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ElectroSense;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Check if works";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Check if works";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -530,7 +532,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.31;
-				PRODUCT_BUNDLE_IDENTIFIER = ElectroSense.ElectroSense;
+				PRODUCT_BUNDLE_IDENTIFIER = ElectroSense.xcodeproj;
 				PRODUCT_NAME = ElectroSense;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
