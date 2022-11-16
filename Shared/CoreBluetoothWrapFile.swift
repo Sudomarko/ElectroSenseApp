@@ -15,23 +15,22 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     var powered_on: Bool;
     var scanning: Bool;
     var connected: Bool;
-    var central_manager: CBCentralManager;
+    private var central_manager: CBCentralManager!;
     var service: CBUUID;
     var message: String;
     
-    override init()
+    required override init()
     {
         powered_on = false;
         scanning = false;
         connected = false;
         service = CBUUID(string: "B266616A-CC79-AC67-6160-04E23C2B3289");
-        central_manager = CBCentralManager(delegate: nil, queue:nil);
         message = "";
         super.init();
     }
     
     func set_manager() {
-        self.central_manager = CBCentralManager(delegate: self, queue:nil);
+        self.central_manager = CBCentralManager.init(delegate: self, queue: DispatchQueue(label: "BT_queue"));
     }
     
     func set_service(insert_val : String) {
@@ -43,8 +42,27 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        guard central.state == .poweredOn else { return }
-        // Start scanning for peripherals
+        var consoleLog = ""
+
+        switch central.state {
+              case .poweredOff:
+                  consoleLog = "BLE is powered off"
+              case .poweredOn:
+                  consoleLog = "BLE is poweredOn"
+              case .resetting:
+                  consoleLog = "BLE is resetting"
+              case .unauthorized:
+                  consoleLog = "BLE is unauthorized"
+              case .unknown:
+                  consoleLog = "BLE is unknown"
+              case .unsupported:
+                  consoleLog = "BLE is unsupported"
+              default:
+                  consoleLog = "default"
+        }
+        print(consoleLog)
+        return;
+        
     }
     
     func centralManager(_ centralManager: CBCentralManager,
@@ -103,13 +121,12 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     }
     
     func get_message() {
-        while (true) {
-            let seconds = 4.0
-            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-                // Put your code which should be executed with a delay here
-                print(self.message);
-            }
-        }
+    
+            
+        // Put your code which should be executed with a delay here
+        print(self.message);
+            
+        
     }
     
 
