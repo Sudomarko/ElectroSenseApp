@@ -118,6 +118,7 @@ struct HeartRateView: View {
     @State private var showAlert = false
     let some_val = CoreBluetoothWrap();
     init() {
+        
         some_val.set_manager();
     }
     var body: some View {

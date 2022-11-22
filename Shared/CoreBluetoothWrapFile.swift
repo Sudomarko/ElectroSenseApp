@@ -9,6 +9,7 @@ import Foundation
 import CoreBluetooth
 import os
 import SwiftUI
+import HealthKit
 
 class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     @Published var title = "CoreBluetoothWrap";
@@ -20,6 +21,10 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     private var characteristic: CBCharacteristic!;
     var service: CBUUID;
     var message: String;
+    var data_val_string = [String] ();
+    var data_val_int = [Double] ();
+    var heart_rate = StoreHealthData();
+    
     
     required override init()
     {
@@ -28,7 +33,30 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         connected = false;
         service = CBUUID(string: "FFE0");
         message = "";
+        let heartRateQuantityType = HKObjectType.quantityType(forIdentifier: .heartRate)!
+        let allTypes = Set([HKObjectType.workoutType(),
+                              heartRateQuantityType
+            ])
+        heart_rate.requestAuthorization(toShare: nil, read: allTypes) { (result, error) in
+            if let error = error {
+                // deal with the error
+                print(error)
+                return
+            }
+            guard result else {
+                // deal with the failed request
+                return
+            }
+        }
         super.init();
+        
+    }
+    
+    let completion_block: (Bool, (any Error)?) -> Void = {
+        (success, error) -> Void in
+            if !success {
+                abort()
+            }
     }
     
     func set_manager() {
@@ -126,7 +154,13 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
       // Decode/Parse the data here
       self.message = String(decoding: data, as: UTF8.self)
         
-      print(message);
+      self.data_val_string = message.components(separatedBy: ",")
+        
+      self.data_val_int = data_val_string.map {(Double($0.replacingOccurrences(of:"\r\n", with: "")) ?? 0)!}
+        
+      print(data_val_int);
+        
+      self.heart_rate.saveHeartRate(heartRate: data_val_int[0], completion: completion_block);
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?){
@@ -144,6 +178,28 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     func get_message()->String {
         return String(message);
     }
+    
+    
 }
 
+class StoreHealthData: HKHealthStore {
+    @Published var title = "StoreHealthData";
+    var heartRateStore = HKHealthStore();
+    
+    
+    func saveHeartRate(date: Date = Date(), heartRate heartRateValue: Double, completion completionBlock: @escaping (Bool, Error?) -> Void) {
+        let unit = HKUnit.count().unitDivided(by: HKUnit.minute())
+        let quantity = HKQuantity(unit: unit, doubleValue: heartRateValue)
+        let type = HKQuantityType.quantityType(forIdentifier: .heartRate)!
 
+        let heartRateSample = HKQuantitySample(type: type, quantity: quantity, start: date, end: date)
+
+        self.heartRateStore.save(heartRateSample) { (success, error) -> Void in
+            if !success {
+                print("An error occured saving the HR sample \(heartRateSample). In your app, try to handle this gracefully. The error was: \(error).")
+            }
+            completionBlock(success, error)
+        }
+    }
+
+}
