@@ -39,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		41545C3D292EDE9100F7C13B /* ElectroSense (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ElectroSense (iOS).entitlements"; sourceTree = "<group>"; };
 		FB84C41D28D2291F00701953 /* ElectroSenseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElectroSenseApp.swift; sourceTree = "<group>"; };
 		FB84C41E28D2291F00701953 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FB84C41F28D2292200701953 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -90,6 +91,7 @@
 		FB84C41728D2291D00701953 = {
 			isa = PBXGroup;
 			children = (
+				41545C3D292EDE9100F7C13B /* ElectroSense (iOS).entitlements */,
 				FBDFEBC229253F900008551D /* ElectroSense--iOS--Info.plist */,
 				FB84C41C28D2291E00701953 /* Shared */,
 				FB84C42B28D2292200701953 /* macOS */,
@@ -474,6 +476,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "ElectroSense (iOS).entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
@@ -486,6 +489,7 @@
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Check if works";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Check if works";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Check if works";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Check if works";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -514,6 +518,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "ElectroSense (iOS).entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
@@ -526,6 +531,7 @@
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Check if works";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Check if works";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Check if works";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Check if works";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

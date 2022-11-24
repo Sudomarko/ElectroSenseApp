@@ -23,7 +23,9 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     var message: String;
     var data_val_string = [String] ();
     var data_val_int = [Double] ();
-    var heart_rate = StoreHealthData();
+    public var heart_rate = StoreHealthData();
+    
+    
     
     
     required override init()
@@ -160,6 +162,8 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         
       print(data_val_int);
         
+      self.heart_rate.requestStoreAuth();
+        
       self.heart_rate.saveHeartRate(heartRate: data_val_int[0], completion: completion_block);
     }
     
@@ -184,8 +188,27 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
 
 class StoreHealthData: HKHealthStore {
     @Published var title = "StoreHealthData";
-    var heartRateStore = HKHealthStore();
+    @State var heartRateStore = HKHealthStore();
+    public var heartRateQuantity = HKUnit(from: "count/min")
+    @State public var value = 0
     
+    func requestStoreAuth() {
+            let writableTypes: Set<HKSampleType> = [
+                HKQuantityType.quantityType(forIdentifier: .heartRate)!
+            ]
+            let readableTypes: Set<HKSampleType> = [
+                HKQuantityType.quantityType(forIdentifier: .heartRate)!
+            ]
+        
+        self.heartRateStore.requestAuthorization(toShare: writableTypes, read: readableTypes) { (success, error) -> Void in
+                if success {
+                    print("[HealthKit] request Authorization succeed!")
+                } else {
+                    print("[HealthKit] request Authorization failed!")
+                }
+                if let error = error { print("[HealthKit] An error occurred: \(error)") }
+            }
+    }
     
     func saveHeartRate(date: Date = Date(), heartRate heartRateValue: Double, completion completionBlock: @escaping (Bool, Error?) -> Void) {
         let unit = HKUnit.count().unitDivided(by: HKUnit.minute())
@@ -193,13 +216,21 @@ class StoreHealthData: HKHealthStore {
         let type = HKQuantityType.quantityType(forIdentifier: .heartRate)!
 
         let heartRateSample = HKQuantitySample(type: type, quantity: quantity, start: date, end: date)
+        let authorizationStatus = heartRateStore.authorizationStatus(for: type)
 
-        self.heartRateStore.save(heartRateSample) { (success, error) -> Void in
-            if !success {
-                print("An error occured saving the HR sample \(heartRateSample). In your app, try to handle this gracefully. The error was: \(error).")
-            }
-            completionBlock(success, error)
-        }
+                switch authorizationStatus {
+
+                    case .sharingAuthorized: print("sharing authorized")
+                    self.heartRateStore.save(heartRateSample) { (success, error) -> Void in
+                        if !success {
+                            print("An error occured saving the HR sample \(heartRateSample). In your app, try to handle this gracefully. The error was: \(error).")
+                        }
+                        completionBlock(success, error)
+                    }
+                    case .sharingDenied: print("sharing denied")
+                    default: print("not determined")
+
+                }
+       
     }
-
 }
