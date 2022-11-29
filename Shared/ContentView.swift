@@ -118,7 +118,7 @@ struct CirculationView: View {
 struct HeartRateView: View {
     @State private var showAlert = false
     @State private var value = 0;
-    let some_val = CoreBluetoothWrap();
+    var some_val = CoreBluetoothWrap();
     var some_heart_rate = StoreHealthData();
     
     init() {
@@ -128,7 +128,7 @@ struct HeartRateView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("\(value)")
+                Text()
             }
             .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
@@ -139,7 +139,7 @@ struct HeartRateView: View {
                         }
                     }
                 }
-        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform: {self.startHeartRateQuery(quantityTypeIdentifier: .heartRate)})
+        }.navigationViewStyle(StackNavigationViewStyle())
         
     }
     private func process(_ samples: [HKQuantitySample], type: HKQuantityTypeIdentifier) {

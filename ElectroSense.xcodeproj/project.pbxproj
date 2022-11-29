@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB1A40D7293690C3003978BB /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1A40D6293690C3003978BB /* HealthKit.framework */; };
 		FB84C43628D2292400701953 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84C43528D2292400701953 /* Tests_iOS.swift */; };
 		FB84C43828D2292400701953 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84C43728D2292400701953 /* Tests_iOSLaunchTests.swift */; };
 		FB84C44228D2292500701953 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84C44128D2292500701953 /* Tests_macOS.swift */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		41545C3D292EDE9100F7C13B /* ElectroSense (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ElectroSense (iOS).entitlements"; sourceTree = "<group>"; };
+		FB1A40D6293690C3003978BB /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		FB84C41D28D2291F00701953 /* ElectroSenseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElectroSenseApp.swift; sourceTree = "<group>"; };
 		FB84C41E28D2291F00701953 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FB84C41F28D2292200701953 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB1A40D7293690C3003978BB /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +91,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB1A40D5293690C3003978BB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FB1A40D6293690C3003978BB /* HealthKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		FB84C41728D2291D00701953 = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +109,7 @@
 				FB84C43428D2292300701953 /* Tests iOS */,
 				FB84C44028D2292400701953 /* Tests macOS */,
 				FB84C42528D2292200701953 /* Products */,
+				FB1A40D5293690C3003978BB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -480,7 +492,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = 8679A43V99;
+				DEVELOPMENT_TEAM = WL39568T2Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ElectroSense--iOS--Info.plist";
@@ -501,7 +513,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.31;
-				PRODUCT_BUNDLE_IDENTIFIER = ElectroSenseApp.xcodeproj;
+				PRODUCT_BUNDLE_IDENTIFIER = ElectroSenseApps.xcodeproj;
 				PRODUCT_NAME = ElectroSense;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -522,7 +534,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = 8679A43V99;
+				DEVELOPMENT_TEAM = WL39568T2Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ElectroSense--iOS--Info.plist";
@@ -543,7 +555,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.31;
-				PRODUCT_BUNDLE_IDENTIFIER = ElectroSenseApp.xcodeproj;
+				PRODUCT_BUNDLE_IDENTIFIER = ElectroSenseApps.xcodeproj;
 				PRODUCT_NAME = ElectroSense;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
