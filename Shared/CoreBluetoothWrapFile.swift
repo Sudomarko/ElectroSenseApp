@@ -11,7 +11,7 @@ import os
 import SwiftUI
 import HealthKit
 
-class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, ObservableObject {
     @Published var title = "CoreBluetoothWrap";
     var powered_on: Bool;
     var scanning: Bool;
@@ -23,7 +23,10 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     var message: String;
     var data_val_string = [String] ();
     var data_val_int = [Double] ();
-    public var heart_rate = StoreHealthData();
+    @State public var heart_rate = StoreHealthData();
+    public var to_print = 0.0 {didSet {
+        objectWillChange.send()
+    }}
     
     
     
@@ -39,6 +42,7 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         let allTypes = Set([HKObjectType.workoutType(),
                               heartRateQuantityType
             ])
+        super.init();
         heart_rate.requestAuthorization(toShare: nil, read: allTypes) { (result, error) in
             if let error = error {
                 // deal with the error
@@ -50,8 +54,6 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
                 return
             }
         }
-        super.init();
-        
     }
     
     let completion_block: (Bool, Error?) -> Void = {
@@ -160,9 +162,11 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         
       self.data_val_int = data_val_string.map {(Double($0.replacingOccurrences(of:"\r\n", with: "")) ?? 0)!}
         
-      print(data_val_int);
-        
       self.heart_rate.requestStoreAuth();
+        
+      to_print = data_val_int[0];
+      //print(data_val_int[0])
+      //print(to_print);
         
       self.heart_rate.saveHeartRate(heartRate: data_val_int[0], completion: completion_block);
     }
@@ -179,8 +183,8 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         }
     }
     
-    func get_message()->String {
-        return String(message);
+    func get_message()->Int {
+        return Int(to_print);
     }
     
     
@@ -203,7 +207,6 @@ class StoreHealthData: HKHealthStore {
         
         self.heartRateStore.requestAuthorization(toShare: writableTypes, read: readableTypes) { (success, error) -> Void in
                 if success {
-                    print("[HealthKit] request Authorization succeed!")
                 } else {
                     print("[HealthKit] request Authorization failed!")
                 }
@@ -222,7 +225,7 @@ class StoreHealthData: HKHealthStore {
 
                     switch authorizationStatus {
 
-                        case .sharingAuthorized: print("sharing authorized")
+                        case .sharingAuthorized:
                         self.heartRateStore.save(heartRateSample) { (success, error) -> Void in
                             if !success {
                                 print("An error occured saving the HR sample \(heartRateSample). In your app, try to handle this gracefully. The error was: \(error).")
@@ -237,49 +240,17 @@ class StoreHealthData: HKHealthStore {
         }
     }
     
-    func getTodaysHeartRates() {
-        let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
-        //predicate
-        let calendar = NSCalendar.current
-        let now = NSDate()
-        let components = calendar.dateComponents([.year, .month, .day], from: now as Date)
-        
-        guard let startDate:NSDate = calendar.date(from: components) as NSDate? else { return }
-        var dayComponent    = DateComponents()
-        dayComponent.day    = 1
-        let endDate:NSDate? = calendar.date(byAdding: dayComponent, to: startDate as Date) as NSDate?
-        let predicate = HKQuery.predicateForSamples(withStart: startDate as Date, end: endDate as Date?, options: [])
-
-        //descriptor
-        let sortDescriptors = [
-                                NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
-                              ]
-        
-        heartRateQuery = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: 25, sortDescriptors: sortDescriptors, resultsHandler: { (query, results, error) in
-            guard error == nil else { print("error"); return }
-
-            self.printHeartRateInfo(results: results)
-        }) //eo-query
-        
-        heartRateStore.execute(heartRateQuery!)
-     }//eom
-    
-    /*used only for testing, prints heart rate info */
-    private func printHeartRateInfo(results:[HKSample]?)
-    {
-        for (_, sample) in results!.enumerated() {
-            guard let currData:HKQuantitySample = sample as? HKQuantitySample else { return }
-
-            print("[\(sample)]")
-            print("Heart Rate: \(currData.quantity.doubleValue(for: heartRateQuantity))")
-            print("quantityType: \(currData.quantityType)")
-            print("Start Date: \(currData.startDate)")
-            print("End Date: \(currData.endDate)")
-            print("Metadata: \(currData.metadata)")
-            print("UUID: \(currData.uuid)")
-            print("Source: \(currData.sourceRevision)")
-            print("Device: \(currData.device)")
-            print("---------------------------------\n")
-        }//eofl
-    }
+    private func process(_ samples: [HKQuantitySample], type: HKQuantityTypeIdentifier) {
+            // variable initialization
+            var lastHeartRate = 0.0
+            
+            // cycle and value assignment
+            for sample in samples {
+                if type == .heartRate {
+                    lastHeartRate = sample.quantity.doubleValue(for: heartRateQuantity)
+                }
+                
+                self.value = Int(lastHeartRate)
+            }
+        }
 }
