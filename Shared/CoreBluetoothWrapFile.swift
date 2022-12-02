@@ -165,7 +165,7 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
       self.heart_rate.requestStoreAuth();
         
       to_print = data_val_int[0];
-      //print(data_val_int[0])
+      print(message)
       //print(to_print);
         
       self.heart_rate.saveHeartRate(heartRate: data_val_int[0], completion: completion_block);

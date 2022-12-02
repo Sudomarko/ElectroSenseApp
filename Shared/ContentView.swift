@@ -8,8 +8,11 @@
 import SwiftUI
 import HealthKit
 
-struct ContentView: View {
+struct ContentView: View{
     @State private var showAlert = false
+    @StateObject var some_val = CoreBluetoothWrap();
+    var some_heart_rate = StoreHealthData();
+    let heartRateQuantity = HKUnit(from: "count/min")
     var body: some View {
         NavigationView {
             VStack {
@@ -26,9 +29,7 @@ struct ContentView: View {
                     }.isDetailLink(false)
                     NavigationLink(destination: HeartRateView()) {
                         VStack {
-                            Image("1 heart-rate").resizable()
-                                .padding(.all, 40.0)
-                                .scaledToFit()
+                            Text("\(Int(some_val.to_print))")
                             Text("Heart Rate")
                                 .font(.title3)
                                 .fontWeight(.heavy)
@@ -90,9 +91,15 @@ struct ContentView: View {
                 }
             }.padding(.bottom, 50)
             
-        }.navigationViewStyle(StackNavigationViewStyle())
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:start)
         
     }
+    
+    func start(){
+        some_val.set_manager();
+        
+    }
+    
 }
 struct CirculationView: View {
     @State private var showAlert = false
@@ -115,18 +122,15 @@ struct CirculationView: View {
     }
 }
 
-struct HeartRateView: View {
+struct HeartRateView: View{
     @State private var showAlert = false
     @State private var value = "0";
     @State private var stop_loop = 0;
-    @StateObject var some_val = CoreBluetoothWrap();
-    var some_heart_rate = StoreHealthData();
-    let heartRateQuantity = HKUnit(from: "count/min")
     
     var body: some View {
         NavigationView {
             VStack {
-                Text("\(some_val.to_print)")
+                Text("HeartRate")
             }
             .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
@@ -137,15 +141,10 @@ struct HeartRateView: View {
                         }
                     }
                 }
-        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:start)
+        }.navigationViewStyle(StackNavigationViewStyle())
         
     }
-    
-    func start(){
-        some_val.set_manager();
-        
-    }
-    
+
 }
 
 struct PulseOxView: View {
