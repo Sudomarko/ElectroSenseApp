@@ -10,8 +10,6 @@ import HealthKit
 
 struct ContentView: View{
     @State private var showAlert = false
-    @StateObject var some_val = CoreBluetoothWrap();
-    var some_heart_rate = StoreHealthData();
     let heartRateQuantity = HKUnit(from: "count/min")
     var body: some View {
         NavigationView {
@@ -29,7 +27,7 @@ struct ContentView: View{
                     }.isDetailLink(false)
                     NavigationLink(destination: HeartRateView()) {
                         VStack {
-                            Text("\(Int(some_val.to_print))")
+                            Image("1 heart-rate").resizable().padding(.all, 40.0).scaledToFit()
                             Text("Heart Rate")
                                 .font(.title3)
                                 .fontWeight(.heavy)
@@ -91,12 +89,7 @@ struct ContentView: View{
                 }
             }.padding(.bottom, 50)
             
-        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:start)
-        
-    }
-    
-    func start(){
-        some_val.set_manager();
+        }.navigationViewStyle(StackNavigationViewStyle());
         
     }
     
@@ -126,6 +119,7 @@ struct HeartRateView: View{
     @State private var showAlert = false
     @State private var value = "0";
     @State private var stop_loop = 0;
+    @StateObject var some_val = CBSimulation();
     
     var body: some View {
         NavigationView {
@@ -136,19 +130,34 @@ struct HeartRateView: View{
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         VStack {
-                            Text("Heart Rate").font(.largeTitle)
-                            Text("Subtitle").font(.subheadline)
+                            Text(String(Int(some_val.to_printHR))).font(.largeTitle)
+                            Text(String(Int(some_val.to_printEKG))).font(.subheadline)
                         }
                     }
                 }
-        }.navigationViewStyle(StackNavigationViewStyle())
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop);
         
+    }
+    
+    func start() {
+        // Do any additional setup after loading the view, typically from a nib.
+        Task {
+            some_val.genVals();
+        }
+    }
+    
+    func stopLoop() {
+        // Do any additional setup after loading the view, typically from a nib.
+        Task {
+            some_val.stopGen();
+        }
     }
 
 }
 
 struct PulseOxView: View {
     @State private var showAlert = false
+    @StateObject var some_val = CBSimulation();
     var body: some View {
         NavigationView {
             VStack {
@@ -159,12 +168,26 @@ struct PulseOxView: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         VStack {
                             Text("Pulse Ox").font(.largeTitle)
-                            Text("Subtitle").font(.subheadline)
+                            Text(String(Int(some_val.to_printPO))).font(.subheadline)
                         }
                     }
                 }
-        }.navigationViewStyle(StackNavigationViewStyle())
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop);
         
+    }
+    
+    func start() {
+        // Do any additional setup after loading the view, typically from a nib.
+        Task {
+            some_val.genVals();
+        }
+    }
+    
+    func stopLoop() {
+        // Do any additional setup after loading the view, typically from a nib.
+        Task {
+            some_val.stopGen();
+        }
     }
 }
 
@@ -190,6 +213,7 @@ struct BodyPressureView: View {
 }
 
 struct TemperatureView: View {
+    @StateObject var some_val = CBSimulation();
     @State private var showAlert = false
     var body: some View {
         NavigationView {
@@ -201,12 +225,26 @@ struct TemperatureView: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         VStack {
                             Text("Temperature").font(.largeTitle)
-                            Text("Subtitle").font(.subheadline)
+                            Text(String(Double(some_val.to_printTemp))).font(.subheadline)
                         }
                     }
                 }
-        }.navigationViewStyle(StackNavigationViewStyle())
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop);
         
+    }
+    
+    func start() {
+        // Do any additional setup after loading the view, typically from a nib.
+        Task {
+            some_val.genVals();
+        }
+    }
+    
+    func stopLoop() {
+        // Do any additional setup after loading the view, typically from a nib.
+        Task {
+            some_val.stopGen();
+        }
     }
 }
 

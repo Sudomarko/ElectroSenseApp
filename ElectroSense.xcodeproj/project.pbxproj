@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB1432FB29918C5900927C10 /* CBSimulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1432FA29918C5900927C10 /* CBSimulation.swift */; };
+		FB1432FC29918C5900927C10 /* CBSimulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1432FA29918C5900927C10 /* CBSimulation.swift */; };
 		FB1A40D7293690C3003978BB /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1A40D6293690C3003978BB /* HealthKit.framework */; };
 		FB84C43628D2292400701953 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84C43528D2292400701953 /* Tests_iOS.swift */; };
 		FB84C43828D2292400701953 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84C43728D2292400701953 /* Tests_iOSLaunchTests.swift */; };
@@ -41,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		41545C3D292EDE9100F7C13B /* ElectroSense (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ElectroSense (iOS).entitlements"; sourceTree = "<group>"; };
+		FB1432FA29918C5900927C10 /* CBSimulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBSimulation.swift; sourceTree = "<group>"; };
 		FB1A40D6293690C3003978BB /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		FB84C41D28D2291F00701953 /* ElectroSenseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElectroSenseApp.swift; sourceTree = "<group>"; };
 		FB84C41E28D2291F00701953 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -120,6 +123,7 @@
 				FB84C41E28D2291F00701953 /* ContentView.swift */,
 				FB84C41F28D2292200701953 /* Assets.xcassets */,
 				FBCA7ED72923E7F90089000D /* CoreBluetoothWrapFile.swift */,
+				FB1432FA29918C5900927C10 /* CBSimulation.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -324,6 +328,7 @@
 				FBCA7ED82923E7F90089000D /* CoreBluetoothWrapFile.swift in Sources */,
 				FB84C44728D2292500701953 /* ContentView.swift in Sources */,
 				FB84C44528D2292500701953 /* ElectroSenseApp.swift in Sources */,
+				FB1432FB29918C5900927C10 /* CBSimulation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +339,7 @@
 				FBCA7ED92923E7F90089000D /* CoreBluetoothWrapFile.swift in Sources */,
 				FB84C44828D2292500701953 /* ContentView.swift in Sources */,
 				FB84C44628D2292500701953 /* ElectroSenseApp.swift in Sources */,
+				FB1432FC29918C5900927C10 /* CBSimulation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,7 +513,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -549,7 +555,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
