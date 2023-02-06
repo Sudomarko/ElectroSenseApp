@@ -27,6 +27,9 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     public var to_print = 0.0 {didSet {
         objectWillChange.send()
     }}
+    public var to_printEKG = 0.0 {didSet {
+        objectWillChange.send()
+    }}
     
     
     
@@ -165,6 +168,7 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
       self.heart_rate.requestStoreAuth();
         
       to_print = data_val_int[0];
+      to_printEKG = data_val_int[1];
       print(message)
       //print(to_print);
         
