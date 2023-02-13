@@ -7,6 +7,7 @@
 
 import SwiftUI
 import HealthKit
+import SwiftUICharts
 
 struct ContentView: View{
     @State private var showAlert = false
@@ -120,24 +121,35 @@ struct HeartRateView: View{
     @State private var value = "0";
     @State private var stop_loop = 0;
     @StateObject var some_val = CBSimulation();
+    @State private var prev_HR = 0.0;
+    @State private var graphHeart = [0.0]
+    @State private var graphEKG = [0.0]
+    
     
     var body: some View {
         NavigationView {
             VStack {
-                Text("HeartRate")
+                LineView(data: graphHeart, legend: "Heart Rate" , style: Styles.lineChartStyleOne)
+                LineView(data: graphEKG, legend: "EKG")
             }
             .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         VStack {
                             Text(String(Int(some_val.to_printHR))).font(.largeTitle)
-                            Text(String(Int(some_val.to_printEKG))).font(.subheadline)
                         }
                     }
                 }
-        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop);
-        
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop).onChange(of: some_val.to_printHR) {
+                newHR in
+                    self.graphHeart.append(newHR);
+            
+        }.onChange(of: some_val.to_printEKG) {
+            newEKG in
+                self.graphEKG.append(newEKG);
+        }
     }
+    
     
     func start() {
         // Do any additional setup after loading the view, typically from a nib.
@@ -158,21 +170,24 @@ struct HeartRateView: View{
 struct PulseOxView: View {
     @State private var showAlert = false
     @StateObject var some_val = CBSimulation();
+    @State private var graphPO = [0.0]
     var body: some View {
         NavigationView {
             VStack {
-                Text("Data Placeholder")
+                LineView(data: graphPO, legend: "Pulse OX" , style: Styles.lineChartStyleOne)
             }
             .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         VStack {
-                            Text("Pulse Ox").font(.largeTitle)
-                            Text(String(Int(some_val.to_printPO))).font(.subheadline)
+                            Text(String(Int(some_val.to_printPO))).font(.largeTitle)
                         }
                     }
                 }
-        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop);
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop).onChange(of: some_val.to_printPO) {
+            newPO in
+                self.graphPO.append(newPO);
+        };
         
     }
     
@@ -215,21 +230,25 @@ struct BodyPressureView: View {
 struct TemperatureView: View {
     @StateObject var some_val = CBSimulation();
     @State private var showAlert = false
+    @State private var graphTemp = [0.0]
+    
     var body: some View {
         NavigationView {
             VStack {
-                Text("Data Placeholder")
+                LineView(data: graphTemp, legend: "Temperature" , style: Styles.lineChartStyleOne)
             }
             .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         VStack {
-                            Text("Temperature").font(.largeTitle)
-                            Text(String(Double(some_val.to_printTemp))).font(.subheadline)
+                            Text(String(Double(some_val.to_printTemp))).font(.largeTitle)
                         }
                     }
                 }
-        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop);
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop).onChange(of: some_val.to_printTemp) {
+            newTemp in
+                self.graphTemp.append(newTemp);
+        };
         
     }
     

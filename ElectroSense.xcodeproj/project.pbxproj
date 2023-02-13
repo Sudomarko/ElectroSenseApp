@@ -10,6 +10,7 @@
 		FB1432FB29918C5900927C10 /* CBSimulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1432FA29918C5900927C10 /* CBSimulation.swift */; };
 		FB1432FC29918C5900927C10 /* CBSimulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1432FA29918C5900927C10 /* CBSimulation.swift */; };
 		FB1A40D7293690C3003978BB /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1A40D6293690C3003978BB /* HealthKit.framework */; };
+		FB27A8FE299AABE0000129B4 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = FB27A8FD299AABE0000129B4 /* SwiftUICharts */; };
 		FB84C43628D2292400701953 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84C43528D2292400701953 /* Tests_iOS.swift */; };
 		FB84C43828D2292400701953 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84C43728D2292400701953 /* Tests_iOSLaunchTests.swift */; };
 		FB84C44228D2292500701953 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84C44128D2292500701953 /* Tests_macOS.swift */; };
@@ -67,6 +68,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB1A40D7293690C3003978BB /* HealthKit.framework in Frameworks */,
+				FB27A8FE299AABE0000129B4 /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +183,9 @@
 			dependencies = (
 			);
 			name = "ElectroSense (iOS)";
+			packageProductDependencies = (
+				FB27A8FD299AABE0000129B4 /* SwiftUICharts */,
+			);
 			productName = "ElectroSense (iOS)";
 			productReference = FB84C42428D2292200701953 /* ElectroSense.app */;
 			productType = "com.apple.product-type.application";
@@ -275,6 +280,9 @@
 				Base,
 			);
 			mainGroup = FB84C41728D2291D00701953;
+			packageReferences = (
+				FB27A8FC299AAB9C000129B4 /* XCRemoteSwiftPackageReference "ChartView" */,
+			);
 			productRefGroup = FB84C42528D2292200701953 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -773,6 +781,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FB27A8FC299AAB9C000129B4 /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FB27A8FD299AABE0000129B4 /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB27A8FC299AAB9C000129B4 /* XCRemoteSwiftPackageReference "ChartView" */;
+			productName = SwiftUICharts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FB84C41828D2291E00701953 /* Project object */;
 }
