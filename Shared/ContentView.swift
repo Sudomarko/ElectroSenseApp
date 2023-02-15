@@ -1,4 +1,4 @@
- //
+//
 //  ContentView.swift
 //  Shared
 //
@@ -129,14 +129,14 @@ struct HeartRateView: View{
     var body: some View {
         NavigationView {
             VStack {
-                LineView(data: graphHeart, legend: "Heart Rate" , style: Styles.lineChartStyleOne)
-                LineView(data: graphEKG, legend: "EKG")
+                MultiLineChartView(data: [(graphHeart, GradientColors.orngPink)], title: "Heart Rate", form: ChartForm.large, rateValue:Int(some_val.to_printHR), valueSpecifier:"")
+                MultiLineChartView(data: [(graphEKG, GradientColors.green)], title: "EKG", form: ChartForm.large, rateValue:Int(some_val.to_printEKG), valueSpecifier:"")
             }
             .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         VStack {
-                            Text(String(Int(some_val.to_printHR))).font(.largeTitle)
+                            Text(String("Heart Rate")).font(.largeTitle)
                         }
                     }
                 }
@@ -149,15 +149,12 @@ struct HeartRateView: View{
                 self.graphEKG.append(newEKG);
         }
     }
-    
-    
     func start() {
         // Do any additional setup after loading the view, typically from a nib.
         Task {
             some_val.genVals();
         }
     }
-    
     func stopLoop() {
         // Do any additional setup after loading the view, typically from a nib.
         Task {
