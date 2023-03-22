@@ -232,7 +232,7 @@ class StoreHealthData: HKHealthStore {
                         case .sharingAuthorized:
                         self.heartRateStore.save(heartRateSample) { (success, error) -> Void in
                             if !success {
-                                print("An error occured saving the HR sample \(heartRateSample). In your app, try to handle this gracefully. The error was: \(error).")
+                                print("An error occured saving the HR sample \(heartRateSample). In your app, try to handle this gracefully. The error was: \(error).") 
                             }
                             completionBlock(success, error)
                         }

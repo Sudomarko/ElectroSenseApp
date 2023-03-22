@@ -28,6 +28,14 @@ class CBSimulation: NSObject,ObservableObject {
         objectWillChange.send()
     }}
     
+    public var to_printBP1 = [[Double]](repeating: [Double](repeating: 0.0, count: 16), count: 16) {didSet {
+        objectWillChange.send()
+    }}
+    
+    public var to_printBP2 = [[Double]](repeating: [Double](repeating: 0.0, count: 16), count: 16) {didSet {
+        objectWillChange.send()
+    }}
+    
     
     
     required override init()
@@ -53,6 +61,10 @@ class CBSimulation: NSObject,ObservableObject {
         let Temp_max = 40.0;
         let Temp_min = 35.0;
         var Tempdir = 0;
+        
+        let limit = 16;
+
+        
         DispatchQueue.global(qos: .userInitiated).async {
         while(self.cont_gen) {
             sleep(1);
@@ -105,16 +117,32 @@ class CBSimulation: NSObject,ObservableObject {
             } else {
                 self.to_printTemp = self.to_printTemp + 0.5;
             }
-            print(self.to_printHR);
-            print(self.to_printEKG);
-            print(self.to_printPO);
-            print(self.to_printTemp);
+            
+            for row in 0..<limit {
+                self.to_printBP1.append([Double]())
+                for col in 0..<limit {
+                    self.to_printBP1[row][col] = Double.random(in: 0..<100)
+                }
+            }
+            
+            for row in 0..<limit {
+                self.to_printBP2.append([Double]())
+                for col in 0..<limit {
+                    self.to_printBP2[row][col] = Double.random(in: 0..<100)
+                }
+            }
+
+//            print(self.to_printBP1);
+//            print(self.to_printBP2);
+//            print(self.to_printHR);
+//            print(self.to_printEKG);
+//            print(self.to_printPO);
+//            print(self.to_printTemp);
             
             if(self.cont_gen == false) {
                 break;
             }
-        };
-        }
+        };}
         
     }
     

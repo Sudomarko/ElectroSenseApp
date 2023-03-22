@@ -219,6 +219,7 @@ struct PulseOxView: View {
 }
 
 struct BodyPressureView: View {
+    @StateObject private var generator = CBSimulation();
     @State private var showAlert = false
     @State public var presArr = [[Double]](repeating: [Double](repeating: 0.0, count: 16), count: 16);
     @State public var presArr2 = [[Double]](repeating: [Double](repeating: 0.0, count: 16), count: 16);
@@ -281,17 +282,32 @@ struct BodyPressureView: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         VStack {
                             Text("Body Pressure").font(.largeTitle)
-                            Text("Subtitle").font(.subheadline)
                         }
                     }
                 }
-        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start)
+        }.navigationViewStyle(StackNavigationViewStyle())
+        .onAppear(perform:  start).onDisappear(perform: stopLoop).onChange(of: generator.to_printBP1) {
+            newBP in
+                print(newBP)
+                self.presArr = newBP;
+        }.onChange(of: generator.to_printBP2) {
+            newBP in
+                print(newBP)
+                self.presArr2 = newBP;
+        }
     }
     
     func start() {
         // Do any additional setup after loading the view, typically from a nib.
         Task {
-            print(presArr)
+            generator.genVals();
+        }
+    }
+
+    func stopLoop() {
+        // Do any additional setup after loading the view, typically from a nib.
+        Task {
+            generator.stopGen();
         }
     }
 }
