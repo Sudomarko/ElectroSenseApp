@@ -23,14 +23,16 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     var message: String;
     var data_val_string = [String] ();
     var data_val_int = [Double] ();
-    @State public var heart_rate = StoreHealthData();
+//    @State public var heart_rate = StoreHealthData();
     public var to_print = 0.0 {didSet {
         objectWillChange.send()
     }}
     public var to_printEKG = 0.0 {didSet {
         objectWillChange.send()
     }}
-    
+    public var ready = false {didSet {
+        objectWillChange.send()
+    }};
     
     
     
@@ -41,22 +43,21 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         connected = false;
         service = CBUUID(string: "FFE0");
         message = "";
+        ready = false;
         let heartRateQuantityType = HKObjectType.quantityType(forIdentifier: .heartRate)!
-        let allTypes = Set([HKObjectType.workoutType(),
-                              heartRateQuantityType
-            ])
+        let allTypes = Set([HKObjectType.workoutType(),heartRateQuantityType])
         super.init();
-        heart_rate.requestAuthorization(toShare: nil, read: allTypes) { (result, error) in
-            if let error = error {
-                // deal with the error
-                print(error)
-                return
-            }
-            guard result else {
-                // deal with the failed request
-                return
-            }
-        }
+//        heart_rate.requestAuthorization(toShare: nil, read: allTypes) { (result, error) in
+//            if let error = error {
+//                // deal with the error
+//                print(error)
+//                return
+//            }
+//            guard result else {
+//                // deal with the failed request
+//                return
+//            }
+//        }
     }
     
     let completion_block: (Bool, Error?) -> Void = {
@@ -77,10 +78,11 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     func scanForItems() {
         central_manager.scanForPeripherals(withServices: [service], options: nil);
         print("scanning for items");
+        print(service);
     }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        var consoleLog = ""
+        var consoleLog = "Howdy buddy"
 
         switch central.state {
               case .poweredOff:
@@ -165,14 +167,17 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         
       self.data_val_int = data_val_string.map {(Double($0.replacingOccurrences(of:"\r\n", with: "")) ?? 0)!}
         
-      self.heart_rate.requestStoreAuth();
+      //self.heart_rate.requestStoreAuth();
         
       to_print = data_val_int[0];
-      to_printEKG = data_val_int[1];
+      if (data_val_int.count > 1) {
+          to_printEKG = data_val_int[1];
+      }
+      print("message");
       print(message)
       //print(to_print);
         
-      self.heart_rate.saveHeartRate(heartRate: data_val_int[0], completion: completion_block);
+      //self.heart_rate.saveHeartRate(heartRate: data_val_int[0], completion: completion_block);
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?){
@@ -182,8 +187,35 @@ class CoreBluetoothWrap: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
             return
         }
         for characteristic in characteristics {
-            print("discovered characteristic: ", characteristic)
             self.peripheral.setNotifyValue(true, for: characteristic)
+            self.characteristic = characteristic
+            print("discovered characteristic: ", characteristic)
+            print("READYY");
+            self.ready = true;
+        }
+    }
+    
+    func writeOutgoingValue(data: String){
+        
+        let valueString = (data as NSString).data(using: String.Encoding.utf8.rawValue)
+        print(data)
+        if let bluefruitPeripheral = self.peripheral {
+            if let txCharacteristic = self.characteristic {
+                print(txCharacteristic.properties.contains(.writeWithoutResponse));
+                print(bluefruitPeripheral.writeValue(valueString!, for: txCharacteristic, type: CBCharacteristicWriteType.withoutResponse))
+              }
+        } else {
+            print("not ready");
+//            writeOutgoingValue(data: data);
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+        if let error = error {
+            print(error)
+        } else {
+            print("Success!")
+            
         }
     }
     

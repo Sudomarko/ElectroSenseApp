@@ -11,6 +11,8 @@ import SwiftUI
 import HealthKit
 
 class CBSimulation: NSObject,ObservableObject {
+    @Published var sim_type = "D";
+    
     public var to_printHR = 40.0 {didSet {
         objectWillChange.send()
     }}
@@ -38,9 +40,10 @@ class CBSimulation: NSObject,ObservableObject {
     
     
     
-    required override init()
+    init(sim_type: String)
     {
-        super.init();
+        self.sim_type = sim_type;
+        
     }
     
     
@@ -69,68 +72,91 @@ class CBSimulation: NSObject,ObservableObject {
         while(self.cont_gen) {
             sleep(1);
             // Simulate Heart Rate
-            if (self.to_printHR > HR_max) {
-                HRdir = 0;
-            } else if (self.to_printHR < HR_min) {
-                HRdir = 1;
-            }
+            if (self.sim_type == "HR") {
+                if (self.to_printHR > HR_max) {
+                    HRdir = 0;
+                } else if (self.to_printHR < HR_min) {
+                    HRdir = 1;
+                }
+                    
+                if (HRdir == 0) {
+                    self.to_printHR = self.to_printHR - 1.0;
+                } else {
+                    self.to_printHR = self.to_printHR + 1.0;
+                }
                 
-            if (HRdir == 0) {
-                self.to_printHR = self.to_printHR - 1.0;
-            } else {
-                self.to_printHR = self.to_printHR + 1.0;
-            }
                 // Simulate EKG
-            if (self.to_printEKG > EKG_max) {
-                EKGdir = 0;
-            } else if (self.to_printEKG < EKG_min) {
-                EKGdir = 1;
-            }
-                
-            if (EKGdir == 0) {
-                self.to_printEKG = self.to_printEKG - 10.0;
-            } else {
-                self.to_printEKG = self.to_printEKG + 10.0;
-            }
-                // Simulate Pulse Ox
-            if (self.to_printPO > PO_max) {
-                POdir = 0;
-            } else if (self.to_printPO < PO_min) {
-                POdir = 1;
-            }
-                
-            if (POdir == 0) {
-                self.to_printPO = self.to_printPO - 0.5;
-            } else {
-                self.to_printPO = self.to_printPO + 0.5;
-            }
-                
-            // Simulate Temperature
-            if (self.to_printTemp > Temp_max) {
-                Tempdir = 0;
-            } else if (self.to_printTemp < Temp_min) {
-                Tempdir = 1;
-            }
-            
-            if (Tempdir == 0) {
-                self.to_printTemp = self.to_printTemp - 0.5;
-            } else {
-                self.to_printTemp = self.to_printTemp + 0.5;
-            }
-            
-            for row in 0..<limit {
-                self.to_printBP1.append([Double]())
-                for col in 0..<limit {
-                    self.to_printBP1[row][col] = Double.random(in: 0..<100)
+                if (self.to_printEKG > EKG_max) {
+                    EKGdir = 0;
+                } else if (self.to_printEKG < EKG_min) {
+                    EKGdir = 1;
+                }
+                    
+                if (EKGdir == 0) {
+                    self.to_printEKG = self.to_printEKG - 90.0;
+                } else {
+                    self.to_printEKG = self.to_printEKG + 90.0;
                 }
             }
-            
-            for row in 0..<limit {
-                self.to_printBP2.append([Double]())
-                for col in 0..<limit {
-                    self.to_printBP2[row][col] = Double.random(in: 0..<100)
+            else if (self.sim_type == "PO") {
+                    // Simulate Pulse Ox
+                if (self.to_printPO > PO_max) {
+                    POdir = 0;
+                } else if (self.to_printPO < PO_min) {
+                    POdir = 1;
+                }
+                    
+                if (POdir == 0) {
+                    self.to_printPO = self.to_printPO - 0.5;
+                } else {
+                    self.to_printPO = self.to_printPO + 0.5;
+                }
+                
+            } else if (self.sim_type == "T") {
+                // Simulate Temperature
+                if (self.to_printTemp > Temp_max) {
+                    Tempdir = 0;
+                } else if (self.to_printTemp < Temp_min) {
+                    Tempdir = 1;
+                }
+                
+                if (Tempdir == 0) {
+                    self.to_printTemp = self.to_printTemp - 0.5;
+                } else {
+                    self.to_printTemp = self.to_printTemp + 0.5;
+                }
+            } else {
+                for row in 0..<limit {
+                    self.to_printBP1.append([Double]())
+                    for col in 0..<limit {
+                        if (col > 4 && col < 11 && row > 4) {
+                            self.to_printBP1[row][col] = Double.random(in: 50..<100)
+                        if (col > 2 && col < 13 && row > 2) {
+                            self.to_printBP1[row][col] = Double.random(in: 20..<50)
+                        }
+                        } else {
+                            self.to_printBP1[row][col] = Double.random(in: 0..<53)
+                        }
+                    }
+                }
+                
+                for row in 0..<limit {
+                    self.to_printBP2.append([Double]())
+                    for col in 0..<limit {
+                        if (col > 2 && col < 13) {
+                            self.to_printBP2[row][col] = Double.random(in: 50..<100)
+                        } else {
+                            self.to_printBP2[row][col] = Double.random(in: 0..<53)
+                        }
+                        
+                    }
                 }
             }
+                
+              
+            
+            
+            
 
 //            print(self.to_printBP1);
 //            print(self.to_printBP2);

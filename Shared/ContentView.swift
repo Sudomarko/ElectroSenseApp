@@ -8,6 +8,24 @@
 import SwiftUI
 import HealthKit
 import SwiftUICharts
+import UIKit
+import Foundation
+
+struct HiddenNavigationBar: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarHidden(true)
+    }
+}
+
+public extension View {
+    func hiddenNavigationBarStyle() -> some View {
+        modifier( HiddenNavigationBar() )
+    }
+}
+
+
 
 public extension UIImage {
       convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
@@ -21,121 +39,211 @@ public extension UIImage {
         guard let cgImage = image?.cgImage else { return nil }
         self.init(cgImage: cgImage)
       }
+}
+public extension UILabel {
+    func setSizeFont (sizeFont: Double) {
+        self.font =  UIFont(name: self.font.fontName, size: sizeFont)!
+        self.sizeToFit()
     }
+}
 
+struct LoginView: View{
+    @State private var action: Int? = 0
+    @State private var username = ""
+    @State private var password = ""
+    
+    var body:some View{
+        if (action == 0) {
+            ZStack {
+                Color.white.edgesIgnoringSafeArea(.all)
+                VStack {
+                    TextField("Username", text: $username)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .autocapitalization(.none)
+                        .disableAutocorrection(true)
+                        .padding(.horizontal, 60.0)
+                    
+                    TextField("Password", text: $password)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .autocapitalization(.none)
+                        .disableAutocorrection(true)
+                        .padding(.horizontal, 60.0)
+                    Text("Login")
+                        .foregroundColor(.black)
+                        .onTapGesture {
+                            //perform some tasks if needed before opening Destination view
+                            if (username == "username" && password == "password") {
+                                self.action = 1
+                            }
+                        }
+                }
+            }
+        } else {
+            ContentView()
+        }
+        Spacer()
+    }
+    
+}
 
 struct ContentView: View{
+    @StateObject var temp_data = CoreBluetoothWrap();
     @State private var showAlert = false
+    
     let heartRateQuantity = HKUnit(from: "count/min")
     var body: some View {
         NavigationView {
-            VStack {
-                HStack {
-                    NavigationLink(destination: CirculationView()) {
+            ZStack {
+                Color.white.edgesIgnoringSafeArea(.all)
+                VStack {
+                    HStack {
+                        NavigationLink(destination: ElectroSenseView(temp_data:temp_data)) {
                             VStack {
-                                Image("1 circulation").resizable().padding(.all, 50.0).scaledToFit()
-                                Text("Circulation")
-                                    .font(.title3)
+                                Image("warnings").resizable()
+                                    .padding(.all, 40.0)
+                                    .scaledToFit()
+                                Text("Bed Alarm")
+                                    .font(.title2)
                                     .fontWeight(.heavy)
-                                    .foregroundColor(Color.pink)
+                                    .foregroundColor(Color.black)
                             }
-                        
-                    }.isDetailLink(false)
-                    NavigationLink(destination: HeartRateView()) {
-                        VStack {
-                            Image("1 heart-rate").resizable().padding(.all, 40.0).scaledToFit()
-                            Text("Heart Rate")
-                                .font(.title3)
-                                .fontWeight(.heavy)
-                                .foregroundColor(Color.orange)
-                        }
-                        
-                    }.isDetailLink(false)
-                    
-                }
-                HStack {
-                    NavigationLink(destination: PulseOxView()) {
-                        VStack {
-                            Image("1 pulse-ox").resizable().padding(.all, 40.0).scaledToFit()
-                            Text("Pulse Ox")
-                                .font(.title3)
-                                .fontWeight(.heavy)
-                                .foregroundColor(Color(hue: 0.697, saturation: 0.647, brightness: 0.723))
-                        }
-                    }.isDetailLink(false)
-                    
-                    NavigationLink(destination: BodyPressureView()) {
-                        VStack {
-                            Image("body-pressure").resizable().padding(.all, 40.0).scaledToFit()
-                            Text("Pressure")
-                                .font(.title3)
-                                .fontWeight(.heavy)
-                                .foregroundColor(Color.green)
-                                .multilineTextAlignment(.center)
-                                .padding()
-                        }
-                    }.isDetailLink(false)
-                    
-                }
-                HStack {
-                    NavigationLink(destination: TemperatureView()) {
-                        VStack {
-                            Image("1 temp").resizable().padding(.all, 40.0).scaledToFit()
-                            Text("Temperature")
-                                .font(.title3)
-                                .fontWeight(.heavy)
-                                .foregroundColor(Color.blue)
-                        }
                             
-                    }.isDetailLink(false)
-                    
-                    NavigationLink(destination: ElectroSenseView()) {
-                        VStack {
-                            Image("warnings").resizable()
-                                .padding(.all, 40.0)
-                                .scaledToFit()
-                            Text("Warning")
-                                .font(.title3)
-                                .fontWeight(.heavy)
-                                .foregroundColor(Color.red)
-                        }
+                        }.isDetailLink(false)
+                        NavigationLink(destination: HeartRateView(temp_data:temp_data)) {
+                            VStack {
+                                Image("1 heart-rate").resizable().padding(.all, 40.0).scaledToFit()
+                                Text("Heart Rate")
+                                    .font(.title2)
+                                    .fontWeight(.heavy)
+                                    .foregroundColor(Color.black)
+                            }
                             
-                    }.isDetailLink(false)
-                    
+                        }.isDetailLink(false)
+                        
+                    }
+                    HStack {
+                        NavigationLink(destination: PulseOxView(temp_data:temp_data)) {
+                            VStack {
+                                Image("1 pulse-ox").resizable().padding(.all, 40.0).scaledToFit()
+                                Text("Pulse Ox")
+                                    .font(.title2)
+                                    .fontWeight(.heavy)
+                                    .foregroundColor(Color.black)
+                            }
+                        }.isDetailLink(false)
+                        
+                        NavigationLink(destination: BodyPressureView()) {
+                            VStack {
+                                Image("body-pressure-2").resizable().padding(.all, 5.0).scaledToFit()
+                                Text("Pressure")
+                                    .font(.title2)
+                                    .fontWeight(.heavy)
+                                    .foregroundColor(Color.black)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.all, 10.0)
+                            }
+                        }.isDetailLink(false)
+                        
+                    }
+                    HStack {
+                        NavigationLink(destination: TemperatureView(temp_data:temp_data)) {
+                            VStack {
+                                Image("1 temp").resizable().padding(.all, 40.0).scaledToFit()
+                                Text("Temperature")
+                                    .font(.title2)
+                                    .fontWeight(.heavy)
+                                    .foregroundColor(Color.black)
+                            }
+                            
+                        }.isDetailLink(false)
+                        NavigationLink(destination: BodyTemp(temp_data:temp_data)) {
+                            VStack {
+                                Image("body-temp-2").resizable()
+                                    .padding(.all, 40.0)
+                                    .scaledToFit()
+                                Text("Body Temp")
+                                    .font(.title2)
+                                    .fontWeight(.heavy)
+                                    .foregroundColor(Color.black)
+                            }
+                            
+                        }.isDetailLink(false)
+                        
+                    }
+                    Spacer()
                 }
-            }.padding(.bottom, 50)
-            
-        }.navigationViewStyle(StackNavigationViewStyle());
+                    
+            }
+            .navigationBarHidden(true)
+        }.navigationViewStyle(StackNavigationViewStyle()).statusBar(hidden:true).onAppear(perform:start)
+        
+    }
+    
+    func start() {
+        //temp_data.set_manager();
+        //while(temp_data.ready == false) {
+        //}
+        //temp_data.writeOutgoingValue(data: "m");
         
     }
     
 }
-struct CirculationView: View {
-    @State private var showAlert = false
+
+struct BodyTemp: View {
+    //@StateObject var some_val = CBSimulation(sim_type:"T");
+    
+    @StateObject var temp_data: CoreBluetoothWrap;
+    @State private var showAlert = false;
+    @State private var graphTemp = [0.0];
+    
+    
     var body: some View {
         NavigationView {
-            VStack {
-                Text("Data Placeholder")
-            }
-            .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        VStack {
-                            Text("Circulation").font(.largeTitle)
-                            Text("Subtitle").font(.subheadline)
-                        }
-                    }
+            ZStack {
+                Color.white.edgesIgnoringSafeArea(.all)
+                VStack {
+                    MultiLineChartView(data: [(graphTemp, GradientColors.orngPink)], title: "Body Temperature", form: ChartForm.large, rateValue:Int(temp_data.to_print), valueSpecifier:"")
                 }
-        }.navigationViewStyle(StackNavigationViewStyle())
+            }.frame(
+                  minWidth: 0,
+                  maxWidth: .infinity,
+                  minHeight: 0,
+                  maxHeight: .infinity,
+                  alignment: .topLeading
+                )
+            .navigationBarHidden(true)
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop).onChange(of: temp_data.to_print) {
+            newTemp in
+            self.graphTemp.append(newTemp);
+        }
         
+    }
+    
+    func start() {
+        // Do any additional setup after loading the view, typically from a nib.
+        Task {
+            //some_val.genVals();
+            temp_data.set_manager();
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                temp_data.writeOutgoingValue(data:"b");
+            }
+        }
+    }
+    
+    func stopLoop() {
+        // Do any additional setup after loading the view, typically from a nib.
+        Task {
+            //some_val.stopGen();
+        }
     }
 }
 
 struct HeartRateView: View{
+    @StateObject var temp_data: CoreBluetoothWrap;
     @State private var showAlert = false
     @State private var value = "0";
     @State private var stop_loop = 0;
-    @StateObject var some_val = CBSimulation();
+    //@StateObject var some_val = CBSimulation(sim_type:"HR");
     @State private var prev_HR = 0.0;
     @State private var graphHeart = [0.0]
     @State private var graphEKG = [0.0]
@@ -143,83 +251,96 @@ struct HeartRateView: View{
     
     var body: some View {
         NavigationView {
-            VStack {
-                MultiLineChartView(data: [(graphHeart, GradientColors.orngPink)], title: "Heart Rate", form: ChartForm.large, rateValue:Int(some_val.to_printHR), valueSpecifier:"")
-                MultiLineChartView(data: [(graphEKG, GradientColors.green)], title: "EKG", form: ChartForm.large, rateValue:Int(some_val.to_printEKG), valueSpecifier:"")
-            }
-            .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        VStack {
-                            Text(String("Heart Rate")).font(.largeTitle)
-                        }
-                    }
+            ZStack {
+                Color.white.edgesIgnoringSafeArea(.all)
+                VStack {
+                    MultiLineChartView(data: [(graphHeart, GradientColors.orngPink)], title: "Heart Rate", form: ChartForm.large, rateValue:Int(temp_data.to_print), valueSpecifier:"")
+                    MultiLineChartView(data: [(graphEKG, GradientColors.green)], title: "EKG", form: ChartForm.large, rateValue:Int(temp_data.to_printEKG), valueSpecifier:"")
                 }
-        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop).onChange(of: some_val.to_printHR) {
+            }
+            .frame(
+                  minWidth: 0,
+                  maxWidth: .infinity,
+                  minHeight: 0,
+                  maxHeight: .infinity,
+                  alignment: .topLeading
+                )
+            .navigationBarHidden(true)
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop).onChange(of: temp_data.to_print) {
                 newHR in
                     self.graphHeart.append(newHR);
             
-        }.onChange(of: some_val.to_printEKG) {
+        }.onChange(of: temp_data.to_printEKG) {
             newEKG in
                 self.graphEKG.append(newEKG);
         }
     }
+    
     func start() {
         // Do any additional setup after loading the view, typically from a nib.
         Task {
-            some_val.genVals();
+//          some_val.genVals();
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                temp_data.writeOutgoingValue(data: "h");
+            }
         }
     }
     func stopLoop() {
         // Do any additional setup after loading the view, typically from a nib.
         Task {
-            some_val.stopGen();
+            //some_val.stopGen();
         }
     }
 
 }
 
 struct PulseOxView: View {
+    @StateObject var temp_data: CoreBluetoothWrap;
     @State private var showAlert = false
-    @StateObject var some_val = CBSimulation();
+    //@StateObject var some_val = CBSimulation(sim_type:"PO");
     @State private var graphPO = [0.0]
     var body: some View {
         NavigationView {
-            VStack {
-                LineView(data: graphPO, legend: "Pulse OX" , style: Styles.lineChartStyleOne)
-            }
-            .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        VStack {
-                            Text(String(Int(some_val.to_printPO))).font(.largeTitle)
-                        }
-                    }
+            ZStack {
+                Color.white.edgesIgnoringSafeArea(.all)
+                VStack {
+                    MultiLineChartView(data: [(graphPO, GradientColors.orngPink)], title: "Pulse Ox", form: ChartForm.large, rateValue:Int(temp_data.to_print), valueSpecifier:"")
                 }
-        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop).onChange(of: some_val.to_printPO) {
+            }.frame(
+                minWidth: 0,
+                maxWidth: .infinity,
+                minHeight: 0,
+                maxHeight: .infinity,
+                alignment: .topLeading
+              )
+            .navigationBarHidden(true)
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop).onChange(of: temp_data.to_print) {
             newPO in
                 self.graphPO.append(newPO);
-        };
-        
+        }
     }
     
     func start() {
         // Do any additional setup after loading the view, typically from a nib.
         Task {
-            some_val.genVals();
+            //some_val.genVals();
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                temp_data.writeOutgoingValue(data: "o")
+            }
         }
     }
     
     func stopLoop() {
         // Do any additional setup after loading the view, typically from a nib.
         Task {
-            some_val.stopGen();
+            //some_val.stopGen();
         }
     }
 }
 
 struct BodyPressureView: View {
-    @StateObject private var generator = CBSimulation();
+    @StateObject private var generator = CBSimulation(sim_type:"else");
     @State private var showAlert = false
     @State public var presArr = [[Double]](repeating: [Double](repeating: 0.0, count: 16), count: 16);
     @State public var presArr2 = [[Double]](repeating: [Double](repeating: 0.0, count: 16), count: 16);
@@ -233,44 +354,47 @@ struct BodyPressureView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
-                ForEach(presArr,  id: \.self) { array in
-                    HStack(spacing: 0) {
-                        ForEach(array,  id: \.self) { element in
-                            HStack(spacing: 0) {
-                                if (element >= 0.0 && element < 10.0) {
-                                    Image(uiImage:blueImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
-                                }  else if (element >= 10.0 && element < 30.0) {
-                                    Image(uiImage:greenImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
-                                } else if (element >= 30.0 && element < 50.0) {
-                                    Image(uiImage:yellowImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
-                                } else if (element >= 50.0 && element < 70.0) {
-                                    Image(uiImage:orangeImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
-                                } else if (element >= 70.0) {
-                                    Image(uiImage:redImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
-                                } else {
-                                    Image(uiImage:blueImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
+            ZStack {
+                Color.white.edgesIgnoringSafeArea(.all)
+                VStack(spacing: 0) {
+                    ForEach(presArr,  id: \.self) { array in
+                        HStack(spacing: 0) {
+                            ForEach(array,  id: \.self) { element in
+                                HStack(spacing: 0) {
+                                    if (element >= 0.0 && element < 10.0) {
+                                        Image(uiImage:blueImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
+                                    }  else if (element >= 10.0 && element < 30.0) {
+                                        Image(uiImage:greenImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
+                                    } else if (element >= 30.0 && element < 50.0) {
+                                        Image(uiImage:yellowImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
+                                    } else if (element >= 50.0 && element < 70.0) {
+                                        Image(uiImage:orangeImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
+                                    } else if (element >= 70.0) {
+                                        Image(uiImage:redImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
+                                    } else {
+                                        Image(uiImage:blueImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                ForEach(presArr2,  id: \.self) { array in
-                    HStack(spacing: 0) {
-                        ForEach(array,  id: \.self) { element in
-                            HStack(spacing: 0) {
-                                if (element >= 0.0 && element < 10.0) {
-                                    Image(uiImage:blueImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
-                                }  else if (element >= 10.0 && element < 30.0) {
-                                    Image(uiImage:greenImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
-                                } else if (element >= 30.0 && element < 50.0) {
-                                    Image(uiImage:yellowImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
-                                } else if (element >= 50.0 && element < 70.0) {
-                                    Image(uiImage:orangeImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
-                                } else if (element >= 70.0) {
-                                    Image(uiImage:redImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
-                                } else {
-                                    Image(uiImage:blueImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
+                    ForEach(presArr2,  id: \.self) { array in
+                        HStack(spacing: 0) {
+                            ForEach(array,  id: \.self) { element in
+                                HStack(spacing: 0) {
+                                    if (element >= 0.0 && element < 10.0) {
+                                        Image(uiImage:blueImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
+                                    }  else if (element >= 10.0 && element < 30.0) {
+                                        Image(uiImage:greenImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
+                                    } else if (element >= 30.0 && element < 50.0) {
+                                        Image(uiImage:yellowImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
+                                    } else if (element >= 50.0 && element < 70.0) {
+                                        Image(uiImage:orangeImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
+                                    } else if (element >= 70.0) {
+                                        Image(uiImage:redImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
+                                    } else {
+                                        Image(uiImage:blueImage!).border(Color(red: 220, green: 220, blue: 220), width:0.3)
+                                    }
                                 }
                             }
                         }
@@ -281,11 +405,12 @@ struct BodyPressureView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         VStack {
-                            Text("Body Pressure").font(.largeTitle)
+                            Text("Body Pressure").font(.largeTitle).foregroundColor(.black)
                         }
                     }
                 }
         }.navigationViewStyle(StackNavigationViewStyle())
+        
         .onAppear(perform:  start).onDisappear(perform: stopLoop).onChange(of: generator.to_printBP1) {
             newBP in
                 print(newBP)
@@ -313,63 +438,126 @@ struct BodyPressureView: View {
 }
 
 struct TemperatureView: View {
-    @StateObject var some_val = CBSimulation();
-    @State private var showAlert = false
-    @State private var graphTemp = [0.0]
+    //@StateObject var some_val = CBSimulation(sim_type:"T");
+    @StateObject var temp_data: CoreBluetoothWrap;
+    @State private var showAlert = false;
+    @State private var graphTemp = [0.0];
+    @State private var hp1 = true
+    @State private var hp2 = true
+    
+   
     
     var body: some View {
         NavigationView {
-            VStack {
-                LineView(data: graphTemp, legend: "Temperature" , style: Styles.lineChartStyleOne)
-            }
-            .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        VStack {
-                            Text(String(Double(some_val.to_printTemp))).font(.largeTitle)
+            ZStack {
+                Color.white.edgesIgnoringSafeArea(.all)
+                VStack {
+                    MultiLineChartView(data: [(graphTemp, GradientColors.orngPink)], title: "Temperature", form: ChartForm.large, rateValue:Int(temp_data.to_print), valueSpecifier:"")
+                    Toggle("Top Heating Pad", isOn: $hp1).foregroundColor(.black).onChange(of: hp1) { value in
+                        if value {
+                            temp_data.writeOutgoingValue(data:"q")
+                            //print(value)
+                        } else {
+                            temp_data.writeOutgoingValue(data:"g")
+                            //print(value)
+                        }
+                    }
+                    Toggle("Bottom Heating Pad", isOn: $hp2).foregroundColor(.black).onChange(of: hp2) { value in
+                        if value {
+                            temp_data.writeOutgoingValue(data:"k")
+                            //print(value)
+                        } else {
+                            temp_data.writeOutgoingValue(data:"l")
+                            //print(value)
                         }
                     }
                 }
-        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop).onChange(of: some_val.to_printTemp) {
+            }
+            .frame(
+                  minWidth: 0,
+                  maxWidth: .infinity,
+                  minHeight: 0,
+                  maxHeight: .infinity,
+                  alignment: .topLeading
+                )
+            .navigationBarHidden(true)
+        }.navigationViewStyle(StackNavigationViewStyle()).onAppear(perform:  start).onDisappear(perform: stopLoop).onChange(of: temp_data.to_print) {
             newTemp in
                 self.graphTemp.append(newTemp);
-        };
+        }
         
     }
     
     func start() {
         // Do any additional setup after loading the view, typically from a nib.
         Task {
-            some_val.genVals();
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                temp_data.writeOutgoingValue(data:"t");
+            }
+            //some_val.genVals();
         }
     }
     
     func stopLoop() {
         // Do any additional setup after loading the view, typically from a nib.
         Task {
-            some_val.stopGen();
+            //some_val.stopGen();
         }
     }
 }
 
 struct ElectroSenseView: View {
-    @State private var showAlert = false
-    var body: some View {
-        NavigationView {
-            VStack {
-                Text("Data Placeholder")
-            }
-            .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        VStack {
-                            Text("Warnings").font(.largeTitle)
-                            Text("Subtitle").font(.subheadline)
-                        }
+    @StateObject var temp_data: CoreBluetoothWrap;
+    @State private var alert1 = true
+    @State private var alert2 = true
+    @State private var alert3 = true
+    
+        var body: some View {
+            ZStack {
+                Color.white.edgesIgnoringSafeArea(.all)
+                VStack(alignment: .leading) {
+                    Toggle("Alarm Power", isOn: $alert1).foregroundColor(.black)
+                    if alert1 {
+                        Toggle("Patient Bed Sit Up", isOn: $alert2).foregroundColor(.black) .onChange(of: alert2) { value in
+                                if value {
+                                    temp_data.writeOutgoingValue(data:"6")
+                                    //print(value)
+                                } else {
+                                    temp_data.writeOutgoingValue(data:"7")
+                                    //print(value)
+                                }
+                            }
+                        Toggle("Patient Bed Exit", isOn: $alert3).foregroundColor(.black)
+                            .onChange(of: alert3) { value in
+                                    if value {
+                                        temp_data.writeOutgoingValue(data:"8")
+                                        //print(value)
+                                    } else {
+                                        temp_data.writeOutgoingValue(data:"9")
+                                        //print(value)
+                                    }
+                                }
                     }
+                    Spacer()
                 }
-        }.navigationViewStyle(StackNavigationViewStyle())
-        
+            }
+            .onAppear(perform: start)
+            .frame(
+                  minWidth: 0,
+                  maxWidth: .infinity,
+                  minHeight: 0,
+                  maxHeight: .infinity,
+                  alignment: .topLeading
+                )
+        }
+    
+    func start() {
+        Task {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                temp_data.writeOutgoingValue(data:"a")
+            }
+        }
     }
 }
 

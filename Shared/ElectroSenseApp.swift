@@ -7,11 +7,21 @@
 
 import SwiftUI
 
+
 @main
 struct ElectroSenseApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginView().background(Color.white)
         }
     }
 }
+//
+//class ViewController: UIViewController {
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        
+//        self.view.backgroundColor = UIColor.white
+//        
+//    }
+//}
