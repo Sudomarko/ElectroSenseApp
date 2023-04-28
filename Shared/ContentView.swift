@@ -180,10 +180,10 @@ struct ContentView: View{
     }
     
     func start() {
-        //temp_data.set_manager();
-        //while(temp_data.ready == false) {
-        //}
-        //temp_data.writeOutgoingValue(data: "m");
+        temp_data.set_manager();
+        while(temp_data.ready == false) {
+        }
+        temp_data.writeOutgoingValue(data: "m");
         
     }
     
@@ -233,7 +233,7 @@ struct BodyTemp: View {
     func stopLoop() {
         // Do any additional setup after loading the view, typically from a nib.
         Task {
-            //some_val.stopGen();
+           // some_val.stopGen();
         }
     }
 }
@@ -279,7 +279,7 @@ struct HeartRateView: View{
     func start() {
         // Do any additional setup after loading the view, typically from a nib.
         Task {
-//          some_val.genVals();
+          //some_val.genVals();
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 temp_data.writeOutgoingValue(data: "h");
             }
@@ -288,7 +288,7 @@ struct HeartRateView: View{
     func stopLoop() {
         // Do any additional setup after loading the view, typically from a nib.
         Task {
-            //some_val.stopGen();
+           // some_val.stopGen();
         }
     }
 

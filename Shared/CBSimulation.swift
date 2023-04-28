@@ -131,9 +131,8 @@ class CBSimulation: NSObject,ObservableObject {
                     for col in 0..<limit {
                         if (col > 4 && col < 11 && row > 4) {
                             self.to_printBP1[row][col] = Double.random(in: 50..<100)
-                        if (col > 2 && col < 13 && row > 2) {
-                            self.to_printBP1[row][col] = Double.random(in: 20..<50)
-                        }
+                        } else if (col > 2 && col < 13 && row > 2) {
+                            self.to_printBP1[row][col] = Double.random(in: 40..<62)
                         } else {
                             self.to_printBP1[row][col] = Double.random(in: 0..<53)
                         }
@@ -145,6 +144,8 @@ class CBSimulation: NSObject,ObservableObject {
                     for col in 0..<limit {
                         if (col > 2 && col < 13) {
                             self.to_printBP2[row][col] = Double.random(in: 50..<100)
+                        } else if (col > 1 && col < 15) {
+                            self.to_printBP2[row][col] = Double.random(in: 40..<62)
                         } else {
                             self.to_printBP2[row][col] = Double.random(in: 0..<53)
                         }
